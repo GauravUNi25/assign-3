@@ -1,0 +1,46 @@
+function calculator(a, opr, b) {
+    switch (opr) {
+        case '+':
+            return a + b;
+        case '-':
+            return a - b;
+        case '*':
+            return a * b;
+        case '/':
+            return a / b;
+        default:
+            console.log("Invalid operator");
+            return 0; // Return some default value in case of an invalid operator
+    }
+}
+
+function main() {
+    const readline = require('readline');
+    const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout
+    });
+
+    rl.question("Enter the number of tests: ", function (test) {
+        test = parseInt(test);
+        let count = 0;
+
+        const ask = () => {
+            if (count < test) {
+                rl.question("Enter the two integers and the operator (e.g., 5 + 3): ", function (input) {
+                    const [a, opr, b] = input.split(' ');
+                    const res = calculator(parseInt(a), opr, parseInt(b));
+                    console.log(res);
+                    count++;
+                    ask(); // Recursive call for next iteration
+                });
+            } else {
+                rl.close();
+            }
+        };
+
+        ask();
+    });
+}
+
+main();
